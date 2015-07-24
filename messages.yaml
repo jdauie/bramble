@@ -1,0 +1,11 @@
+errors:
+
+  E_INTERNAL: "Internal error"
+  E_UNKNOWN: "Unknown fatal error"
+  
+  E_ROUTING_ROUTE_NOT_FOUND: "The requested URL [:method] :uri was not found (no matching route)"
+  E_ROUTING_ACTION_NOT_FOUND: "The requested URL [:method] :uri was not found (no matching action)"
+  
+  E_INTERNAL_CONTROLLER_FAILED: "Failed to instantiate registered controller"
+  E_INTERNAL_CONTROLLER_INVALID: "Invalid controller implementation"
+

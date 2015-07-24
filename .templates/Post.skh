@@ -1,0 +1,30 @@
+{@Page}
+	{^TemplateBase}
+	{.content}
+		{#PageSection}
+	{/.}
+{/@}
+
+{@Post}
+	{^TemplateBase}
+	{.content}
+		{#PostSection}
+	{/.}
+{/@}
+
+{@Posts}
+	{^TemplateBase}
+	{.content}
+		{?list}
+			{#PostSection}
+		{/?}
+		{?paging}
+			{?older}
+				<a href="{$url}">&laquo; older</a>
+			{/}
+			{?newer}
+				<a href="{$url}">newer &raquo</a>;
+			{/}
+		{/}
+	{/.}
+{/@}

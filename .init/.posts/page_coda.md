@@ -1,0 +1,1 @@
+Coda is currently little more that a workbench utility, but it has support for fast configurable directory searches, optimizing massive disk copy operations, and analyzing file system usage.  There are many tools that already perform these tasks reasonably well, so it may never turn into a standalone release.

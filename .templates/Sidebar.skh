@@ -1,0 +1,84 @@
+{@Sidebar}
+	{#SidebarSearch}
+	{#SidebarSectionRecent}
+	{#SidebarSectionArchives}
+	{#SidebarSectionCategories}
+{/@}
+
+{@SidebarSearch}
+	<div id="search">
+		<form method="get" id="searchform" action="http://www.google.com/search">
+			<input type="hidden" name="as_sitesearch" value="{$root-url}" />
+			<div><input type="search" placeholder="Search" name="q" id="s" /></div>
+		</form>
+	</div>
+{/@}
+
+{@SidebarSection}
+	<div class="right-sub-section" id="{$id}">
+		<div class="title">
+			<h2>{$title}</h2>
+		</div>
+		{$content}
+	</div>
+{/@}
+
+{@SidebarSectionList}
+	{^SidebarSection}
+	{.content}
+		<ul>
+			{$list}
+		</ul>
+	{/.}
+{/@}
+
+{@SidebarSectionLinkList}
+	{^SidebarSectionList}
+	{.list}
+		{?list}
+			<li><a href="{$url}" title="{$text}">{$text}</a></li>
+		{/?}
+	{/.}
+{/@}
+
+{@SidebarSectionLinkListWithCount}
+	{^SidebarSectionList}
+	{.list}
+		{?list}
+			<li><a href="{$url}" title="{$text}">{$text}</a> <span>{$count}</span></li>
+		{/?}
+	{/.}
+{/@}
+
+{@SidebarSectionRecent}
+	{^SidebarSectionList}
+	{.id}recent-posts{/}
+	{.title}Recent Posts{/}
+	{.list}
+		{?list}
+			<li><a href="{%format-url[post]}" title="{$text}">{$text}</a></li>
+		{/?}
+	{/.}
+{/@}
+
+{@SidebarSectionArchives}
+	{^SidebarSectionList}
+	{.id}archives{/}
+	{.title}Archives{/}
+	{.list}
+		{?list}
+			<li><a href="{%format-url[archive]}" title="{$month:format-date['F Y']}">{$month:format-date['Y-m F']}</a> <span>{$count}</span></li>
+		{/?}
+	{/.}
+{/@}
+
+{@SidebarSectionCategories}
+	{^SidebarSectionList}
+	{.id}categories{/}
+	{.title}Categories{/}
+	{.list}
+		{?list}
+			<li><a href="{%format-url[category]}" title="{$text}">{$text}</a> <span>{$count}</span></li>
+		{/?}
+	{/.}
+{/@}

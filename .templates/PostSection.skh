@@ -1,0 +1,55 @@
+{@PageSection}
+<div class="article">
+	<div class="title">
+		<h2><a href="{%format-url[page]}">{$title}</a></h2>
+	</div>
+	<div class="post">
+		<div class="entry">
+			{$content:subvert[code,root]}
+		</div>
+	</div>
+</div>
+{/@}
+
+{@PostSection}
+<div class="article">
+	<div class="title">
+		<small>{$author} | {$time:format-date}</small>
+		<h2><a href="{%format-url[post]}">{$title}</a></h2>
+	</div>
+	<div class="post">
+		<div class="entry">
+			{$content:subvert[code,root]}
+		</div>
+		<div class="postinfo">
+			<!--<div class="com"><a href="{%format-url[post]}#respond" title="Comment on {$title}">Leave a Comment</a></div>-->
+			<div>Posted in 
+				<ul class="taglist">
+					{?categories}
+						<li><a href="{%format-url[category]}" title="View all posts in {$name}" rel="category tag">{$name}</a></li>
+					{/?}
+				</ul>
+			</div>
+			{#Comments}
+		</div>
+	</div>
+</div>
+{/@}
+
+{@Comments}
+<div class="postcomments">
+	{?list}
+		{#Comment}
+	{/?}
+</div>
+{/@}
+
+{@Comment}
+<div class="postcomment">
+	<div class="title">
+		<small>{$time:format-date['Y-m-d H:i:s']}</small>
+		{$name}
+	</div>
+	<div class="a">{$content}</div>
+</div>
+{/@}

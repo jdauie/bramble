@@ -1,0 +1,23 @@
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+#RewriteBase /bramble2/
+RewriteBase /
+
+#RewriteRule ^index\.php$ - [L]
+
+# redirect paths with trailing slash
+# (manually exclude special dirs?)
+RewriteCond %{REQUEST_URI}  /$
+#RewriteRule ^(.+)/$ $1 [R,L]
+#RewriteRule ^(.+)/$ /bramble2/$1 [R,L] # this must be absolute if RewriteBase is not used for non-root
+RewriteRule ^(.+)/$ /$1 [R,L]
+
+RewriteCond %{REQUEST_URI} !^/uploads/
+RewriteCond %{REQUEST_URI} !^/theme/
+RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+</IfModule>

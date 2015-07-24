@@ -1,0 +1,100 @@
+- 
+  sql: |
+    INSERT INTO users (name, email, password, display)
+    VALUES (:name, :email, :password, :display)
+  data:
+    - [jdauie, josh@joshmorey.com, sillypassword, Joshua Morey]
+  filter:
+    password: HashPassword
+
+- 
+  sql: |
+    INSERT INTO terms (name, slug)
+    VALUES (:name, :slug)
+  data:
+    - ["Uncategorized", uncategorized]
+    - ["Personal", personal]
+    - ["C#", csharp]
+    - ["C++", cpp]
+    - ["PHP", php]
+    - ["CloudAE", cloudae]
+    - ["CloudView", cloudview]
+    - ["LiDAR", lidar]
+    - ["Bramble", bramble]
+    - ["Skhema", skhema]
+    - ["Squid", squid]
+    - ["Snail", snail]
+    - ["Coda", coda]
+    - ["JavaScript", javascript]
+
+- 
+  sql: |
+    INSERT INTO term_taxonomy (term, taxonomy)
+    SELECT id, 'category' FROM terms
+    ORDER BY id ASC
+
+- 
+  sql: |
+    INSERT INTO objects (author, type, time, title, slug, content)
+    VALUES (1, 'post', :time, :title, :slug, :content)
+  fill:
+    content: get_post_content
+  map: [time, title, slug, categories]
+  save: posts
+  data:
+    - ["2011-12-23 07:00:00", "CloudAE Preview Announcement", cloudae-preview-announcement, ['cloudae','lidar']]
+    - ["2011-12-23 08:00:00", "Tile Stitching", tile-stitching, ['cloudae','lidar']]
+    - ["2011-12-23 09:00:00", "Segmentation", segmentation, ['cloudae','lidar']]
+    - ["2011-12-24 08:00:00", "Edge Detection", edge-detection, ['cloudae','lidar']]
+    - ["2012-02-27 08:00:00", "Simulating points in WPF 3D", simulating-points-in-wpf-3d, ['cloudae','lidar']]
+    - ["2012-06-26 08:00:00", "The Cost of Double.TryParse", the-cost-of-double-tryparse, ['csharp','cloudae','lidar']]
+    - ["2012-09-19 08:00:00", "LAZ Support", laz-support, ['cpp','cloudae','lidar']]
+    - ["2012-10-25 08:00:00", "Using LASzip from C#", using-laszip-from-csharp, ['csharp','cpp','cloudae','lidar']]
+    - ["2012-10-26 08:00:00", "Point Enumeration in CloudAE", point-enumeration-in-cloudae, ['csharp','cloudae','lidar']]
+    - ["2012-10-29 07:00:00", "MatSu Point MacKenzie in LAZ", matsu-point-mackenzie-in-laz, ['cloudae','lidar']]
+    - ["2012-10-29 08:00:00", "PropertyManager", property-manager, ['csharp','cloudae']]
+    - ["2012-12-12 08:00:00", "Snail XML Parser", snail-xml-parser, ['csharp','snail']]
+    - ["2013-03-14 08:00:00", "SATR Development Finalized", satr-development-finalized, ['csharp','cloudae','lidar']]
+    - ["2013-05-02 08:00:00", "I wrote two lines of code yesterday", i-wrote-two-lines-of-code-yesterday, ['uncategorized']]
+    - ["2013-09-27 08:00:00", "Reinventing The Wheel", reinventing-the-wheel, ['php','skhema']]
+    - ["2014-01-17 08:00:00", "Skhema Templating Engine", skhema-templating-engine, ['php','bramble','skhema']]
+    - ["2014-01-24 20:45:00", "Merging Personal Blog", merging-personal-blog, ['personal']]
+    - ["2014-01-24 21:15:00", "Skhema Functions", skhema-functions, ['php','skhema']]
+    - ["2014-01-27 08:57:00", "Skhema Filters", skhema-filters, ['php','bramble','skhema']]
+    - ["2014-03-27 23:21:00", "Filter Chaining", filter-chaining, ['bramble','skhema']]
+    - ["2014-05-08 12:44:00", "WebGL LAS Viewer", webgl-las-viewer, ['cloudae','cloudview','javascript']]
+    - ["2014-05-15 14:20:00", "Spatialization Development", spatialization-development, ['cloudae','cloudview']]
+    - ["2015-07-10 17:30:00", "Moving from Subversion to Git", moving-from-subversion-to-git, ['skhema']]
+
+- 
+  sql: |
+    INSERT INTO objects (author, type, time, menu_order, title, slug, content)
+    VALUES (1, 'page', :time, :order, :title, :slug, :content)
+  fill:
+    content: get_page_content
+  map: [time, order, title, slug]
+  data:
+    - ["2011-12-23 07:00:00", 4, "CloudAE", cloudae]
+    - ["2011-12-23 07:00:00", 6, "Bramble", bramble]
+    - ["2011-12-23 07:00:00", 7, "Skhema", skhema]
+    - ["2011-12-23 07:00:00", 8, "Subvert", subvert]
+    - ["2011-12-23 07:00:00", 0, "Squid", squid]
+    - ["2011-12-23 07:00:00", 12, "Snail", snail]
+    - ["2011-12-23 07:00:00", 0, "Coda", coda]
+    - ["2011-12-23 07:00:00", 3, "CloudView", cloudview]
+    - ["2011-12-23 07:00:00", -1, "About", about]
+    - ["2011-12-23 07:00:00", -2, "Contact", contact]
+    - ["2011-12-23 07:00:00", 0, "Résumé", resume]
+    - ["2011-12-23 07:00:00", 0, "Test", test]
+
+- 
+  sql: |
+    INSERT INTO term_relationships (object, taxonomy)
+    SELECT :oid, x.id FROM term_taxonomy x
+    INNER JOIN terms t ON t.id = x.term
+    WHERE x.taxonomy = 'category' AND t.slug = :category
+  data: posts
+  expand: categories/category
+  load:
+    oid: |
+      SELECT id FROM objects WHERE time = :time AND slug = :slug

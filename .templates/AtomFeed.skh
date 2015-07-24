@@ -1,0 +1,33 @@
+{@AtomFeed}
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+	
+	<title>{$title}</title>
+	<subtitle>{$subtitle}</subtitle>
+	<link href="{$root-url}" />
+	<id>{$id}</id>
+	<updated>{%first[list/time]:format-date[atom]}</updated>
+	
+	{?list}
+		<entry>
+			<title>{$title}</title>
+			<link href="{%format-url[post]}" />
+			<id>{$id}</id>
+			<updated>{$time:format-date[atom]}</updated>
+			<content type="html">
+				<![CDATA[
+					{$content:subvert[root]}
+				]]>
+			</content>
+			<author>
+				<name>{$author}</name>
+			</author>
+			{?categories}
+				<category term="{$name}"/>
+			{/?}
+		</entry>
+	{/?}
+	
+</feed>
+{/@}
