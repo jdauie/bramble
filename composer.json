@@ -9,6 +9,10 @@
     "require": {
         "php": ">=5.5.0",
         "jacere/skhema": "dev-master",
-        "jacere/subvert": "dev-master"
+        "jacere/subvert": "dev-master",
+        "mustangostang/spyc": "dev-master"
+    },
+    "autoload": {
+      "psr-4": {"Jacere\\Bramble\\": ""}
     }
 }
