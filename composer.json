@@ -1,18 +1,19 @@
 {
-    "name": "jacere/bramble",
-    "homepage": "http://jacere.net",
-    "authors" : [{
-        "name": "jdauie",
-        "email": "jdauie@gmail.com"
-    }],
-    "license": "MIT",
-    "require": {
-        "php": ">=5.5.0",
-        "jacere/skhema": "dev-master",
-        "jacere/subvert": "dev-master",
-        "mustangostang/spyc": "dev-master"
-    },
-    "autoload": {
-      "psr-4": {"Jacere\\Bramble\\": ""}
-    }
+  "name": "jacere/bramble",
+  "homepage": "http://jacere.net",
+  "authors" : [{
+    "name": "jdauie",
+    "email": "jdauie@gmail.com"
+  }],
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5.0",
+    "jacere/composer-autoload": "dev-master",
+    "jacere/skhema": "dev-master",
+    "jacere/subvert": "dev-master",
+    "mustangostang/spyc": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {"Jacere\\Bramble\\": ""}
+  }
 }

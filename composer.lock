@@ -4,8 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b41bb39f12fa6dd3a51492daa5f912a7",
+    "hash": "9262170c6c2b399498177e4faf77af97",
     "packages": [
+        {
+            "name": "jacere/composer-autoload",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jdauie/composer-autoload.git",
+                "reference": "066477638b829068839b86de4c48e88952f6af7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jdauie/composer-autoload/zipball/066477638b829068839b86de4c48e88952f6af7e",
+                "reference": "066477638b829068839b86de4c48e88952f6af7e",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Jacere\\Composer\\AutoloadPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jacere\\Composer\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2015-07-27 04:32:21"
+        },
         {
             "name": "jacere/skhema",
             "version": "dev-master",
@@ -130,6 +159,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "jacere/composer-autoload": 20,
         "jacere/skhema": 20,
         "jacere/subvert": 20,
         "mustangostang/spyc": 20
