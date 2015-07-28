@@ -23,6 +23,14 @@ final class DebugController extends Controller {
 			])->method(false, ['GET']),
 		];
 	}
+	
+	public function action__phpinfo() {
+		ob_start();
+		phpinfo();
+		$info = ob_get_contents();
+		ob_end_clean();
+		return $info;
+	}
 
 	public function action__initialize() {
 		self::action__clean();

@@ -56,14 +56,28 @@ class ClassLoader implements IPhpSerializable {
 	 * @return ClassLoader
 	 */
 	public static function instance($rebuild = false) {
-		return Cache::load('classmap', function() {
+		return Cache::load('classmap', [self::class, 'immediate'], $rebuild);
+	}
+
+	/**
+	 * @return ClassLoader
+	 */
+	public static function immediate() {
+		function() {
 			$files = [];
 			if (count(self::$c_locations)) {
-				$files = Directory::search(self::$c_locations, Directory::R_PHP, [Directory::R_HIDDEN]);
+				foreach (self::$c_locations as $path) {
+					if (is_file($path)) {
+						$files[] = $path;
+					}
+					else {
+						$files = array_merge($files, Directory::search(self::$c_locations, Directory::R_PHP, [Directory::R_HIDDEN]));
+					}
+				}
 			}
 			$map = self::get_class_map($files);
 			return new self($map);
-		}, $rebuild);
+		}
 	}
 
 	private static function get_class_map($files, $ignore_duplicates = true) {

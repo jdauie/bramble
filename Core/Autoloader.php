@@ -5,6 +5,11 @@ namespace Jacere\Bramble\Core;
 class Autoloader {
 	
 	private static $c_lookup;
+
+	public static function initialize($lookup) {
+		self::$c_lookup = $lookup;
+		spl_autoload_register([__CLASS__, 'autoload']);
+	}
 	
 	public static function register($namespace, $path) {
 		
@@ -16,17 +21,14 @@ class Autoloader {
 		
 		// add to lookup tree
 		$current = &self::$c_lookup;
-		$parts = explode('\\', $namespace);
+		$parts = explode('\\', rtrim($namespace, '\\'));
 		foreach ($parts as $part) {
-			if (!isset($current[$part])) {
-				$current[$part] = [];
+			if (!isset($current['name'][$part])) {
+				$current['name'][$part] = [];
 			}
-			$current = &$current[$part];
+			$current = &$current['name'][$part];
 		}
-		if (is_string($current)) {
-			throw new \Exception('partial autoload path redefinition');
-		}
-		$current = $path;
+		$current['path'][] = $path;
 	}
 	
 	public static function autoload($class) {
@@ -35,19 +37,20 @@ class Autoloader {
 		$current = self::$c_lookup;
 		for ($i = 0; $i < $count; $i++) {
 			$part = $parts[$i];
-			if (!isset($current[$part])) {
+			if (!isset($current['name'][$part])) {
 				break;
 			}
-			$current = $current[$part];
+			$current = $current['name'][$part];
 		}
-		if ($current && is_string($current)) {
-			$path = $current;
-			if ($i !== $count) {
-				array_splice($parts, 0, $i);
-				$path = sprintf('%s/%s.php', $path, implode('/', $parts));
-			}
-			if (file_exists($path)) {
-				require_once($path);
+		if ($current && isset($current['path'])) {
+			foreach ($current['path'] as $path) {
+				if ($i !== $count) {
+					array_splice($parts, 0, $i);
+					$path = sprintf('%s/%s.php', $path, implode('/', $parts));
+				}
+				if (is_file($path)) {
+					require($path);
+				}
 			}
 		}
 	}

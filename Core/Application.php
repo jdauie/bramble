@@ -13,8 +13,8 @@ class Application {
 	public static function start() {
 		
 		// hide errors
-		//error_reporting(E_ALL);
-		//ini_set('display_errors', 0);
+		error_reporting(E_ALL);
+		ini_set('display_errors', 0);
 
 		// use UTC on server
 		date_default_timezone_set('UTC');

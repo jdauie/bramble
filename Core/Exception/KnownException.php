@@ -28,7 +28,10 @@ class KnownException extends \Exception {
 			$status = self::$c_groups[$group];
 		}
 		
-		$names = Spyc::YAMLLoad(BRAMBLE_DIR.'/messages.yaml')['errors'];
+		$names = NULL;
+		if (class_exists('Spyc')) {
+			$names = Spyc::YAMLLoad(BRAMBLE_DIR . '/messages.yaml')['errors'];
+		}
 		
 		if (isset($names[$name])) {
 			$message = $names[$name];
