@@ -71,7 +71,10 @@ class Application {
 			throw new \Exception('invalid url base');
 		}
 		$domain = $_SERVER['HTTP_HOST'];
-		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+		    (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		    ? 'https'
+		    : 'http';
 		$app_url = sprintf('%s://%s%s', $protocol, $domain, $path);
 		return $app_url;
 	}
